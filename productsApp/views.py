@@ -3,6 +3,11 @@ from .models import *
 # import requests
 
 def index(request):
+    if 'user_id' not in request.session:
+        context = {
+            'user': User.objects.filter(id = 2)[0]
+        }
+        return render(request, 'index.html', context)
     context = {
         "user": User.objects.filter(id=request.session['user_id'])[0],
     }
@@ -17,28 +22,6 @@ def products(request, categoryName=''):
         }
         return render(request, 'productsListing.html', context)
     else:
-        # result = requests.get('https://api.printful.com/products').json()['result']
-        # print(r)
-        # categories = [];
-        # productList = [];
-        # for item in result:
-        #     if item['type'] == 'T-SHIRT':
-        #         if item['type_name'] not in categories:
-        #             categories.append(item['type_name'])
-                # print(item['model'])
-                # Product.objects.create(
-                #     name = item['model'],
-                #     desc = item['description'],
-                #     price = 9.99,
-                #     image = item['image'],
-                #     category = Category.objects.filter(name = item['type_name'])[0]
-                # )
-        # print('this is the products:', productList)
-        # context = {
-        #     'product': productList,
-        #     'categories': categories,
-        # }
-
         context = {
             'categories': Category.objects.all(),
             'products': Product.objects.all(),
@@ -70,15 +53,15 @@ def addToCart(request, productId): # changed ShoppingCart_id to productId
     shoppingCart = ShoppingCart.objects.filter(user = user)
     if not shoppingCart:
         ShoppingCart.objects.create(user = user)
-    quantity = int(request.POST['quantity'])
-    for i in range(quantity):
-        ShoppingCart.objects.filter(user = user)[0].products.add(Product.objects.filter(id = productId)[0])
+    # quantity = int(request.POST['quantity'])
+    # for i in range(quantity):
+    ShoppingCart.objects.filter(user = user)[0].products.add(Product.objects.filter(id = productId)[0])
     return redirect(f'/user/{user.id}/shoppingCart') # ajax action? so it doesn't make the user navigate away form the page every time they add a new item
 
-def shoppingCart(request, userId=1): #changed user_id to userId
+def shoppingCart(request, userId): #changed user_id to userId
     context = {
         'products_in_cart': Product.objects.filter(shoppingCart__user__id = request.session['user_id']),
-        'user': User.objects.filter(id = userId),
+        'user': User.objects.filter(id = userId)[0],
     }
     return render(request, "shopping_cart.html", context)
 

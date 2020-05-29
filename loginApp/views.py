@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
+from productsApp.models import *
 from .forms import *
 
 
@@ -8,8 +9,8 @@ import bcrypt
 
 def showLogin(request):
     # If the user is already logged in, they cannot navigate to the login/registration page
-    if 'user_id' in request.session:
-        return redirect('/home')
+    # if 'user_id' in request.session:
+    #     return redirect('/home')
     # form = RegisterForm()
     # context = {
     #     'regForm': form
@@ -18,8 +19,8 @@ def showLogin(request):
 
 def showRegister(request):
     # If the user is already logged in, they cannot navigate to the login/registration page
-    if 'user_id' in request.session:
-        return redirect('/home')
+    # if 'user_id' in request.session:
+    #     return redirect('/home')
     return render(request, 'register.html')
 
 def register(request):
@@ -59,7 +60,7 @@ def login(request):
     return redirect('/user')
 
 
-def editUser(request, userId):
+def editUser(request, userId=1):
     # Returns to main page if the user is not logged in
     if 'user_id' not in request.session:
         return redirect('/home')
@@ -68,10 +69,11 @@ def editUser(request, userId):
     if request.session['user_id'] != userId:
         return redirect('/home')
 
-    user = User.objects.filter(id = request.sesion['user_id'])[0]
+    user = User.objects.filter(id = request.session['user_id'])[0]
     context = {
         'user': user,
         'shipping_addresses': ShippingInfo.objects.filter(user = user),
+        'stored_payment': PaymentInfo.objects.filter(user = user),
     }
     return render(request, 'editUser.html', context) # Renders the page and passes in the user object
 
