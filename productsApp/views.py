@@ -4,7 +4,8 @@ from .models import *
 def index(request):
     if 'user_id' not in request.session:
         context = {
-            'user': User.objects.filter(id = 2)[0]
+            'user': User.objects.filter(id = 2)[0],
+            'all_categories': Category.objects.all()[:5]
         }
         return render(request, 'index.html', context)
     context = {
