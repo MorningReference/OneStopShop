@@ -41,6 +41,7 @@ def products(request, categoryName=''):
         }
         return render(request, 'productsListing.html', context) # change the name of the html to something different
 
+
 def singleProduct(request, productId):
     product = Product.objects.filter(id = productId)[0]
     context = {
@@ -61,13 +62,16 @@ def singleProduct(request, productId):
 def addToCart(request, productId): # changed ShoppingCart_id to productId
     # ShoppingCart.objects.get(id=ShoppingCart_id).products.add(Product.objects.get(id=request.POST['product_id']))
     user = User.objects.filter(id = request.session['user_id'])[0]
-    ShoppingCart.objects.filter(user = user).products.add(Product.objects.filter(id = productId)[0])
-    return redirect(f'/user/{{user.id}}/shoppingCart') # ajax action? so it doesn't make the user navigate away form the page every time they add a new item
+    shoppingCart = ShoppingCart.objects.filter(user = user)
+    if not shoppingCart:
+        ShoppingCart.objects.create(user = user)
+    ShoppingCart.objects.filter(user = user)[0].products.add(Product.objects.filter(id = productId)[0])
+    return redirect(f'/user/{user.id}/shoppingCart') # ajax action? so it doesn't make the user navigate away form the page every time they add a new item
 
 def shoppingCart(request, userId): #changed user_id to userId
     context = {
         'products_in_cart': Product.objects.filter(shoppingCart__user__id = request.session['user_id']),
-        'user': User.objects.filter(id = request.session['user_id']),
+        'user': User.objects.filter(id = userId),
     }
     return render(request, "shopping_cart.html", context)
 
@@ -79,15 +83,35 @@ def deleteCartItem(request, userId, productId): # changed product_id to productI
     ShoppingCart.objects.filter(user = User.objects.filter(id = userId)[0])[0].products.remove(product_to_remove)
     return redirect(f'/user/{{userId}}/shoppingCart')
 
-def showPayment(request):#add UserId
+def showPayment(request, userId): #productId
     context = {
-        # "User": User.objects.filter(id=userID),
-        # "Product": Product.objects.filter(id=userId)
+        "User": User.objects.filter(id=userId),
+        "Product": Product.objects.filter(id=userId)
     }
     return render(request, "payment.html", context)# render payment page with all of the items from shopping cart
 
 def processPayment(request, userId):
-    # code to process payment
+        
+    # errors = User.objects.tripValidator(request.POST)
+    
+    # if len(errors) > 0:
+    #     for key, value in errors.items():
+    #         messages.error(request, value, extra_tags=key)
+    #     return redirect(f"/dashboard/trip/new")
+    userid = request.session['user_id']   
+    user = User.objects.filter(id = userid)[0]
+    pay = ShippingInfo.objects.create(
+        userID = user,
+        first_name = request.POST['destination'],
+        last_name = request.POST['startDate'],
+        address = request.POST['endDate'],
+        adress2 = request.POST['planTrip'],
+        city = request.POST['destination'],
+        state = request.POST['startDate'],
+        zipcode = request.POST['endDate'],
+    )
+    return redirect("/dashboard")
+
     return HttpResponse('process payment') # process the payment and redirect to the receipt page
 
 

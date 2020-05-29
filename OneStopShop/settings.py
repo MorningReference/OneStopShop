@@ -30,10 +30,12 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 # CORS_ORIGIN_WHITELIST = [
 #     "https://api.printful.com",
 #     "http://localhost:8000"
 # ]
+
 
 INSTALLED_APPS = [
     'adminApp',
