@@ -144,7 +144,7 @@
                 console.log('prevented', output)
 
                 $.get({
-                    url: $(this).attr('href') + '/addToCart',
+                    url: $(this).attr('href'),
                     success: function(res){
                         $('#cart').prepend('<p class="text-primary">Added to Cart!</p>');
                         console.log('this went through');
