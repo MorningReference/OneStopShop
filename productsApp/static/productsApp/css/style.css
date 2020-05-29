@@ -1,6 +1,6 @@
 /* Base */
-#overlay{
-  background-image: url(/productsApp/static/productsApp/images/shopping-stock.jpg);
+.card-text{
+  height: 7rem;
 }
 
 body {
