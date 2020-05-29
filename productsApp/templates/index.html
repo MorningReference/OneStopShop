@@ -377,27 +377,30 @@
           </div>
   
           <div class="row">
-            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">
-              <div class="listing-item">
-                <div class="listing-image">
-                  <img src=https://files.cdn.printful.com/products/10/product_1551968618.jpg alt="Image" class="img-fluid">
-                  {% comment %} ################# {% endcomment %}
-                </div>
-                <div class="listing-item-content">
-                  <a href="/product/{{product.id}}" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>
-                  <a class="px-3 mb-3 category" href="/product/{{product.id}}">Car &amp; Vehicles</a>
-                  <h2 class="mb-1"><a href="#">Red Luxury Car</a></h2>
-                  <span class="address">West Orange, New York</span>
+            {% for product in products %}
+              <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">
+                <div class="listing-item">
+                  <div class="listing-image">
+                    <img src={{product.image}} alt="Image" class="img-fluid">
+                    {% comment %} ################# {% endcomment %}
+                  </div>
+                  <div class="listing-item-content">
+                    <a href="/product/{{product.id}}" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>
+                    <a class="px-3 mb-3 category" href="/product/{{product.id}}">{{product.name}}</a>
+                    <h2 class="mb-1"><a href="/product/{{product.id}}">${{product.price}}</a></h2>
+                    <span class="category">{{product.category.name}}</span>
+                  </div>
                 </div>
               </div>
+              {% endfor %}
 
-            </div>
+            {% comment %} </div>
             <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">
               
               <div class="listing-item">
                 <div class="listing-image">
                   <img src=https://files.cdn.printful.com/products/12/product_1550594502.jpg alt="Image" class="img-fluid">
-                  {% comment %} ############# {% endcomment %}
+                  #############
                 </div>
                 <div class="listing-item-content">
                   <a href="/product/{{product.id}}" class="bookmark"><span class="icon-heart"></span></a>
@@ -413,7 +416,7 @@
               <div class="listing-item">
                 <div class="listing-image">
                   <img src=https://files.cdn.printful.com/products/37/product_1573197397.jpg alt="Image" class="img-fluid">
-                  {% comment %} ################ {% endcomment %}
+                  ################
                 </div>
                 <div class="listing-item-content">
                   <a href="/product/{{product.id}}" class="bookmark"><span class="icon-heart"></span></a>
@@ -430,7 +433,7 @@
               <div class="listing-item">
                 <div class="listing-image">
                   <img src=https://files.cdn.printful.com/products/141/product_1563182581.jpg alt="Image" class="img-fluid">
-                  {% comment %} #################### {% endcomment %}
+                  ####################
                 </div>
                 <div class="listing-item-content">
                   <a href="/product/{{product.id}}" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>
@@ -446,7 +449,7 @@
               <div class="listing-item">
                 <div class="listing-image">
                   <img src=https://files.cdn.printful.com/products/370/product_1558000107.jpg alt="Image" class="img-fluid">
-                  {% comment %} ###################### {% endcomment %}
+                  ######################
                 </div>
                 <div class="listing-item-content">
                   <a href="/product/{{product.id}}" class="bookmark"><span class="icon-heart"></span></a>
@@ -454,10 +457,10 @@
                   <h2 class="mb-1"><a href="#">House with Swimming Pool</a></h2>
                   <span class="address">West Orange, New York</span>
                 </div>
-              </div>
+              </div> {% endcomment %}
   
             </div>
-  
+
           </div>
         </div>
       </div>

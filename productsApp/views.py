@@ -9,6 +9,7 @@ def index(request):
         return render(request, 'index.html', context)
     context = {
         "user": User.objects.filter(id=request.session['user_id'])[0],
+        "products": Product.objects.all()[7:13]
     }
     return render(request, "index.html", context)
 
