@@ -49,7 +49,9 @@ def singleProduct(request, productId=1):
 def addToCart(request, productId): # changed ShoppingCart_id to productId
     # ShoppingCart.objects.get(id=ShoppingCart_id).products.add(Product.objects.get(id=request.POST['product_id']))
     user = User.objects.filter(id = request.session['user_id'])[0]
-    shoppingCart = ShoppingCart.objects.filter(user = user)
+    print('created', user.first_name)
+    shoppingCart = ShoppingCart.objects.filter(user = user).first()
+    print('created', shoppingCart.id)
     if not shoppingCart:
         ShoppingCart.objects.create(user = user)
     # quantity = int(request.POST['quantity'])
