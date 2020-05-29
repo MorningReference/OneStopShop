@@ -5,12 +5,16 @@ def index(request):
     if 'user_id' not in request.session:
         context = {
             'user': User.objects.filter(id = 2)[0],
-            'all_categories': Category.objects.all()[:5]
+            'all_categories': Category.objects.all()[:6],
+            'categories_all': Category.objects.all()
         }
         return render(request, 'index.html', context)
     context = {
         "user": User.objects.filter(id=request.session['user_id'])[0],
-        "products": Product.objects.all()[7:13]
+        "products": Product.objects.all()[7:13],
+        'all_categories': Category.objects.all()[:6],
+        'categories_all': Category.objects.all()
+
     }
     return render(request, "index.html", context)
 
@@ -51,9 +55,9 @@ def singleProduct(request, productId=1):
 def addToCart(request, productId): # changed ShoppingCart_id to productId
     # ShoppingCart.objects.get(id=ShoppingCart_id).products.add(Product.objects.get(id=request.POST['product_id']))
     user = User.objects.filter(id = request.session['user_id'])[0]
-    print('created', user.first_name)
+    # print('created', user.first_name)
     shoppingCart = ShoppingCart.objects.filter(user = user).first()
-    print('created', shoppingCart.id)
+    # print('created', shoppingCart.id)
     if not shoppingCart:
         ShoppingCart.objects.create(user = user)
     # quantity = int(request.POST['quantity'])
@@ -74,7 +78,7 @@ def deleteCartItem(request, userId, productId): # changed product_id to productI
     # to_delete.delete()
     product_to_remove = Product.objects.filter(id = productId)[0]
     ShoppingCart.objects.filter(user = User.objects.filter(id = userId)[0])[0].products.remove(product_to_remove)
-    return redirect(f'/user/{{userId}}/shoppingCart')
+    return redirect(f'/user/{userId}/shoppingCart')
 
 def showPayment(request, userId=1): #productId
     context = {

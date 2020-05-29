@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
                       <div class="wrap-icon">
-                        <span class="icon icon-room"></span>
+                        <!-- <span class="icon icon-room"></span> -->
                         <input type="text" class="form-control rounded" placeholder="Location">
                       </div>
                       
@@ -132,12 +132,9 @@
                         <span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
                         <select class="form-control rounded" name="" id="">
                           <option value="">All Categories</option>
-                          <option value="">Real Estate</option>
-                          <option value="">Books &amp;  Magazines</option>
-                          <option value="">Furniture</option>
-                          <option value="">Electronics</option>
-                          <option value="">Cars &amp; Vehicles</option>
-                          <option value="">Others</option>
+                          {% for category in categories_all.all %}
+                          <option value="">{{category.name}}</option>
+                          {% endfor %}
                         </select>
                       </div>
                     </div>
@@ -160,7 +157,7 @@
           <div class="overlap-category mb-5">
             
             <div class="row align-items-stretch no-gutters">
-              {% for category in all_categories %}
+              {% for category in all_categories.all %}
               <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
                 <a href="/products/{{category.name}}/" class="popular-category h-100">
                   <span class="icon"><span class="flaticon-clothes"></span></span>
@@ -169,49 +166,9 @@
               </div>
               {% endfor %} 
               </div> 
-           </div> 
-           
-        
-          
-          
-              <!-- <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
-                <a href="#" class="popular-category h-100">
-                  <span class="icon"><span class="flaticon-books"></span></span>
-                  <span class="caption mb-2 d-block">{{category.name}}</span>
-                  <span class="number">398</span>
-                </a>
-              </div>
-              <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
-                <a href="#" class="popular-category h-100">
-                  <span class="icon"><span class="flaticon-bunk-bed"></span></span>
-                  <span class="caption mb-2 d-block">{{category.name}}</span>
-                  <span class="number">1,229</span>
-                </a>
-              </div>
-              <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
-                <a href="#" class="popular-category h-100">
-                  <span class="icon"><span class="flaticon-innovation"></span></span>
-                  <span class="caption mb-2 d-block">{{category.name}}</span>
-                  <span class="number">32,891</span>
-                </a>
-              </div>
-              <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
-                <a href="#" class="popular-category h-100">
-                  <span class="icon"><span class="flaticon-car"></span></span>
-                  <span class="caption mb-2 d-block">{{category.name}}</span>
-                  <span class="number">29,221</span>
-                </a>
-              </div>
-              <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
-                <a href="#" class="popular-category h-100">
-                  <span class="icon"><span class="flaticon-pizza"></span></span>
-                  <span class="caption mb-2 d-block">{{category.name}}</span>
-                  <span class="number">219</span>
-                </a>
-              </div> -->
-          
-          
-          <div class="row">
+          </div> 
+
+          <!-- <div class="row">
             <div class="col-12  block-13">
               <div class="owl-carousel nonloop-block-13">
                 
@@ -365,14 +322,13 @@
   
           </div>
         </div>
-      </div>
+      </div> -->
       
       <div class="site-section" data-aos="fade">
         <div class="container">
           <div class="row justify-content-center mb-5">
             <div class="col-md-7 text-center border-primary">
               <h2 class="font-weight-light text-primary">Popular Products</h2>
-              <p class="color-black-opacity-5">Lorem Ipsum Dolor Sit Amet</p>
             </div>
           </div>
   
@@ -475,7 +431,6 @@
           </div>
           <div class="row mt-5">
             <div class="col-lg-6">
-  
               <div class="d-block d-md-flex listing">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_2.jpg')"></a>
                 <div class="lh-content">
@@ -510,7 +465,6 @@
                     </p>
                   </div>
                 </div>
-  
                 <div class="d-block d-md-flex listing">
                   <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_4.jpg')"></a>
                   <div class="lh-content">
@@ -528,12 +482,9 @@
                     </p>
                   </div>
                 </div>
-  
-               
-  
             </div>
+
             <div class="col-lg-6">
-  
               <div class="d-block d-md-flex listing">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_1.jpg')"></a>
                 <div class="lh-content">
