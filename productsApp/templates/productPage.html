@@ -36,91 +36,85 @@
     <script src="{% static 'productsApp/js/rangeslider.min' %}"></script>
     <script src="{% static 'productsApp/js/main.js' %}"></script>
 </head>
-<header class="site-navbar container py-0 bg-white" role="banner">
 
-    <div class="container">
-        <div class="row align-items-center">
-        
-        <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.html" class="text-black mb-0">OneStop<span class="text-primary">Shop</span>  </a></h1>
-        </div>
-        <div class="col-12 col-md-10 d-none d-xl-block">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-
-            <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="listings.html">Ads</a></li>
-                <li class="has-children">
-                <a href="about.html">Products</a>
-                <ul class="dropdown">
-                    <li><a href="#">Electronics</a></li>
-                    <li><a href="#">Cars</a></li>
-                    <li><a href="#">Real Estate</a></li>
-                    <li><a href="#">Other</a></li>
-                </ul>
-                </li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-
-                <li class="ml-xl-3 login"><a href="/user"><span class="border-left pl-xl-4"></span>Log In</a></li>
-                <li><a href="register.html">Register</a></li>
-
-                <li><a href="/user/{{user.id}}/shoppingCart" role="button" style="position: right;">Shopping Cart</a></li>
-            </ul>
-            </nav>
-        </div>
-
-
-        <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">
-            <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
-        </div>
-
-        </div>
-    </div>
-
-</header>
 <body>
-    <div class="container">
-        <div class="col">
-            <div class="product">
-                <img class="col"style="width: 15%;"src="{{product.image}}" alt="Logo">
-                <label for="sort">Sort</label>
-                    <select name="sort">
-                        <option value="Price">Price</option>
-                        <option value="mostPop">Most Popular</option>
-                        <option value="highToLow">High to Low</option>
-                        <option value="lowToHigh">Low to High</option>
-                        <option value="featured">Featured</option>
-                        <option value="new">Newest Arrival</option>    
-                    </select>
+    <div class="site-wrap">
+        <div class="site-mobile-menu">
+            <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
             </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
         </div>
-    </form>
-    <form>
-        <div class="row">
-            <h1>{{product.name}}</h1>
-            <p>{{product.desc}}</p>
-            <div class="labels">
-                <select name="sort">
-                    <option value="1">1</option>
-                    <option value="2">2/option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option> 
-                </select>
-            </div>
-    </form>
-            <form>         
-                <div class="bottomImages">
-                    <h3>Similar Items</h3>
-                    <div class="labels">
-                        {% for product in similar_products.all %}
-                        <img class="col"style="width: 8%;"src="{{product.image}}" alt="Logo">
-                        <h11>9.99</h11>
-                        {% endfor %}
-                    </div>
+        <header class="site-navbar container py-0 bg-white" role="banner">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-6 col-xl-2">
+                    <h1 class="mb-0 site-logo"><a href="index.html" class="text-black mb-0">OneStop<span class="text-primary">Shop</span>  </a></h1>
                 </div>
-            </form> 
+                <div class="col-12 col-md-10 d-none d-xl-block">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li class="active"><a href="/home">Home</a></li>
+                            <li><a href="/user/{{user.id}}/shoppingCart">Shopping Cart</a></li>
+                            <li><a href="/user/{{user.id}}/wishList">Wish List</a></li>
+                            <li class="has-children">
+                                <a href="#">Account</a>
+                                <ul class="dropdown">
+                                    <li><a href="/user/myaccount/{{user.id}}">My Account</a></li>
+                                    <li><a href="/user/{{user.id}}/orders">My Orders</a></li>
+                                    <!-- <li><a href="/dashboard/products">My Products</a></li> -->
+                                </ul>
+                            </li>
+                            <li class="ml-xl-3 login"><a href="/user/login"><span class="border-left pl-xl-4"></span>Log In</a></li>
+                            <li><a href="/user/register">Register</a></li>
+                            <li><a href="/products" class="cta"><span class="bg-primary text-white rounded">Product Listings</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">
+                    <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="row">
+                <img class="w-50 col-6" src="{{product.image}}" alt="product #{{product.id}} img">
+                <div class="col-6">
+                    <div class="desc">
+                        <h1>{{product.name}}</h1>
+                        <p>{{product.desc}}</p>
+                    </div>
+                    <form action="/product/{{product.id}}/addToCart" method="POST">
+                        {% csrf_token %}
+                        <label for="quantity">Qty:</label>
+                        <select name="quantity">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option> 
+                        </select>
+                        <div class="buttons">
+                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                            <button type="submit" class="btn btn-primary">Buy Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                <form>         
+                    <div class="bottomImages">
+                        <h3>Similar Items</h3>
+                        <div class="labels">
+                            {% for product in similar_products.all %}
+                            <a href="/product/{{product.id}}"><img class="col"style="width: 10%;"src="{{product.image}}" alt="Logo"></a>
+                            <h11>{{product.price}}</h11>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </form> 
+        </div>
     </div>
 </body>
 </html>

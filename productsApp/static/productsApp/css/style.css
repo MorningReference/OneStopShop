@@ -1,4 +1,8 @@
 /* Base */
+#overlay{
+  background-image: url(/productsApp/static/productsApp/images/shopping-stock.jpg);
+}
+
 body {
   line-height: 1.7;
   color: #4d4d4d;
