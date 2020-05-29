@@ -451,7 +451,7 @@
                   <h2 class="mb-1"><a href="#">House with Swimming Pool</a></h2>
                   <span class="address">West Orange, New York</span>
                 </div>
-              </div> {% endcomment %}
+              </div>
   
             </div>
 
@@ -469,14 +469,13 @@
           </div>
           <div class="row mt-5">
             <div class="col-lg-6">
-              {%for product in products%}
+              {% for product in products_first.all %}
               <div class="d-block d-md-flex listing">
-                <a href="{{product.image-}}" class="img d-block"></a>
+                <a href="{{product.image}}" class="img d-block" style="background-image: url({{product.image}})"></a>
                 <div class="lh-content">
                   <span class="category">Real Estate</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <h3><a href="listings-single.html">House with Swimming Pool</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
+                  <a href="#" class="bookmark"><span class="icon-heart" ></span></a>
+                  <h3><a href="listings-single.html">Clothing</a></h3>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -522,14 +521,30 @@
                       <span class="review">(3 Reviews)</span>
                     </p>
                   </div>
-                </div>
-  
-               
+                </div> -->
   
             </div>
             <div class="col-lg-6">
-  
+              {% for product in products_second.all %}
               <div class="d-block d-md-flex listing">
+                <a href="{{product.image}}" class="img d-block" style="background-image: url({{product.image}})"></a>
+                <div class="lh-content">
+                  <span class="category">Clothing</span>
+                  <a href="#" class="bookmark"><span class="icon-heart" ></span></a>
+                  <h3><a href="listings-single.html">T-Shirts</a></h3>
+                  <p class="mb-0">
+                    <span class="icon-star text-warning"></span>
+                    <span class="icon-star text-warning"></span>
+                    <span class="icon-star text-warning"></span>
+                    <span class="icon-star text-warning"></span>
+                    <span class="icon-star text-secondary"></span>
+                    <span class="review">(3 Reviews)</span>
+                  </p>
+                </div>
+              </div>
+              {% endfor %}
+  
+              <!-- <div class="d-block d-md-flex listing">
                 <a href="listings-single.html" class="img d-block" style="background-image: url({% static '/productsApp/images/img_1.jpg'%})"></a>
                 <div class="lh-content">
                   <span class="category">Cars &amp; Vehicles</span>
