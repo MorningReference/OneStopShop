@@ -62,13 +62,16 @@ def singleProduct(request, productId):
 def addToCart(request, productId): # changed ShoppingCart_id to productId
     # ShoppingCart.objects.get(id=ShoppingCart_id).products.add(Product.objects.get(id=request.POST['product_id']))
     user = User.objects.filter(id = request.session['user_id'])[0]
-    ShoppingCart.objects.filter(user = user).products.add(Product.objects.filter(id = productId)[0])
-    return redirect(f'/user/{{user.id}}/shoppingCart') # ajax action? so it doesn't make the user navigate away form the page every time they add a new item
+    shoppingCart = ShoppingCart.objects.filter(user = user)
+    if not shoppingCart:
+        ShoppingCart.objects.create(user = user)
+    ShoppingCart.objects.filter(user = user)[0].products.add(Product.objects.filter(id = productId)[0])
+    return redirect(f'/user/{user.id}/shoppingCart') # ajax action? so it doesn't make the user navigate away form the page every time they add a new item
 
 def shoppingCart(request, userId): #changed user_id to userId
     context = {
         'products_in_cart': Product.objects.filter(shoppingCart__user__id = request.session['user_id']),
-        'user': User.objects.filter(id = request.session['user_id']),
+        'user': User.objects.filter(id = userId),
     }
     return render(request, "shopping_cart.html", context)
 
