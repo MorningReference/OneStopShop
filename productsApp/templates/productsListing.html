@@ -265,6 +265,41 @@
                     </div>
                     {% endfor %}
                     <div class="test-div"></div>
+
+                    {% comment %} {% for product in products %}
+                    <div class="card" style="width: 18rem;">
+                        <a href="/product/{{product.id}}"><img class="card-img-top" src="{{product.image}}" alt=""></a>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
+                            <p class="card-text">{{product.desc}}</p>
+                            </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">${{product.price}}</li>
+                        
+                        </ul>
+                        <div class="card-body">
+                            <a href="product/{{product.id}}/addToCart" id="addCart">Click here to add this to your cart</a>
+                          
+                        </div>
+                    </div>
+                   {%endfor%} {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100"> -->
                             <!-- <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>

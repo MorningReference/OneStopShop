@@ -1,3 +1,10 @@
 body {
     padding-top: 100px;
 }
+
+.card-text {
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: scroll;
+}

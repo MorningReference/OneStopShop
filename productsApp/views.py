@@ -7,6 +7,8 @@ def index(request):
             'user': User.objects.filter(id = 2)[0],
             'all_categories': Category.objects.all()[:6],
             'categories_all': Category.objects.all()
+            "products_first": Product.objects.all()[43:46],
+            "products_second": Product.objects.all()[47:50]
         }
         return render(request, 'index.html', context)
     context = {
@@ -14,7 +16,8 @@ def index(request):
         "products": Product.objects.all()[7:13],
         'all_categories': Category.objects.all()[:6],
         'categories_all': Category.objects.all()
-
+        "products_first": Product.objects.all()[43:46],
+        "products_second": Product.objects.all()[47:50]
     }
     return render(request, "index.html", context)
 
