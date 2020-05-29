@@ -3,10 +3,10 @@ from .models import *
 # import requests
 
 def index(request):
-    context = {
-        "user": User.objects.filter(id=request.session['user_id'])[0],
-    }
-    return render(request, "index.html", context)
+    # context = {
+    #     "user": User.objects.filter(id=request.session['user_id'])[0],
+    # }
+    return render(request, "index.html")
 
 def products(request, categoryName=''):
     if(len(categoryName) != 0):
