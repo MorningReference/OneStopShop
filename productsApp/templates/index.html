@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ClassyAds &mdash; Colorlib Website Template</title>
+    <title>OneStopShop</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -158,51 +158,58 @@
         <div class="container">
           
           <div class="overlap-category mb-5">
+            
             <div class="row align-items-stretch no-gutters">
+              {% for category in all_categories %}
               <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
-                <a href="#" class="popular-category h-100">
-                  <span class="icon"><span class="flaticon-house"></span></span>
-                  <span class="caption mb-2 d-block">Real Estate</span>
-                  <span class="number">3,921</span>
-                </a>
+                <a href="/products/{{category.name}}/" class="popular-category h-100">
+                  <span class="icon"><span class="flaticon-clothes"></span></span>
+                  <span class="caption mb-2 d-block">{{category.name}}</span>
+                </a>  
               </div>
-              <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
+              {% endfor %} 
+              </div> 
+           </div> 
+           
+        
+          
+          
+              <!-- <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
                 <a href="#" class="popular-category h-100">
                   <span class="icon"><span class="flaticon-books"></span></span>
-                  <span class="caption mb-2 d-block">Books &amp; Magazines</span>
+                  <span class="caption mb-2 d-block">{{category.name}}</span>
                   <span class="number">398</span>
                 </a>
               </div>
               <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
                 <a href="#" class="popular-category h-100">
                   <span class="icon"><span class="flaticon-bunk-bed"></span></span>
-                  <span class="caption mb-2 d-block">Furniture</span>
+                  <span class="caption mb-2 d-block">{{category.name}}</span>
                   <span class="number">1,229</span>
                 </a>
               </div>
               <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
                 <a href="#" class="popular-category h-100">
                   <span class="icon"><span class="flaticon-innovation"></span></span>
-                  <span class="caption mb-2 d-block">Electronics</span>
+                  <span class="caption mb-2 d-block">{{category.name}}</span>
                   <span class="number">32,891</span>
                 </a>
               </div>
               <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
                 <a href="#" class="popular-category h-100">
                   <span class="icon"><span class="flaticon-car"></span></span>
-                  <span class="caption mb-2 d-block">Cars &amp; Vehicles</span>
+                  <span class="caption mb-2 d-block">{{category.name}}</span>
                   <span class="number">29,221</span>
                 </a>
               </div>
               <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
                 <a href="#" class="popular-category h-100">
                   <span class="icon"><span class="flaticon-pizza"></span></span>
-                  <span class="caption mb-2 d-block">Other</span>
+                  <span class="caption mb-2 d-block">{{category.name}}</span>
                   <span class="number">219</span>
                 </a>
-              </div>
-            </div>
-          </div>
+              </div> -->
+          
           
           <div class="row">
             <div class="col-12  block-13">
