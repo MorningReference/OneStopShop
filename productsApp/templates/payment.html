@@ -7,84 +7,103 @@
         {% load static %}
         <link rel="stylesheet" href="{% static 'style.css' %}">
         <title>Order Page</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'productsApp/fonts/icomoon/style.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/jquery-ui.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/owl.theme.default.min.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/bootstrap-datepicker.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/fonts/flaticon/font/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/aos.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/rangeslider.css' %}">
+        <link rel="stylesheet" href="{% static 'productsApp/css/style.css' %}">
+
+        <script src="{% static 'productsApp/js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/jquery-migrate-3.0.1.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/jquery-ui.js' %}"></script>
+        <script src="{% static 'productsApp/js/popper.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/jquery.stellar.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/jquery.countdown.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/bootstrap-datepicker.min.js' %}"></script>
+        <script src="{% static 'productsApp/js/aos.js' %}"></script>
+        <script src="{% static 'productsApp/js/rangeslider.min' %}"></script>
+        <script src="{% static 'productsApp/js/main.js' %}"></script>   
     </head>
     <body class="bg-white text-dark">
         <div class="col-8" style="margin: auto;">
-            <form action="/addUser" method="POST">
-                {% csrf_token %}
-                    <div class="table" style="margin: auto">
-                        <h1>Your Orders</h>
-                        <table class="table table-dark">
-                            <th>Products</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <!-- will change later specifically to item price quantity and total price with an update link in quantity -->
-                            {% for user in Users %}
-                            <tr>
-                                <td>{{user.first_name}}</td>
-                                <td>{{user.last_name}}</td>
-                                <td>{{user.email_address}}</td>
-                                <td>{{user.age}}</td>
-                            </tr>
-                            {% endfor %}
-                    </div>
-            </form>
+            <div class="table" style="margin: auto">
+                <h1>Your Orders</h>
+                <table class="table table-light">
+                    <th>Products</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <!-- will change later specifically to item price quantity and total price with an update link in quantity -->
+                    {% for user in Users %}
+                    <tr>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td>{{user.email_address}}</td>
+                        <td>{{user.age}}</td>
+                    </tr>
+                    {% endfor %}
+            </div>
             <div class="usertable">
-                        <form action="/shoppingCart" method="POST">
-                    {% csrf_token %}
-                        <div class="Shipping Info">
-                            <h1>Shipping information</h1>
-                            <div class="labels">
-                                <label>First Name</label>
-                                <input type="text" name="firstName" class="col-sm-6 form-control">
-                                <label>Last Name</label>
-                                <input type="text" name="lastName" class="col-sm-6 form-control">
-                                <label>Address</label>
-                                <input type="text" name ="address" class="col-sm-6 form-control">
-                                <label>Adresss 2</label>
-                                <input type="text" name ="address2" class="col-sm-6 form-control">
-                                <label>City</label>
-                                <input type="text" name="city" class="col-sm-6 form-control">
-                                <label>State</label>
-                                <input type="text" name="state" class="col-sm-6 form-control">
-                                <label>Zipcode</label>
-                                <input type="text" name ="zipcode" class="col-sm-6 form-control">
-                            </div>
+                <form action="/user/{{User.id}}/payment/process" method="POST">
+                {% csrf_token %}
+                    <div class="Shipping Info">
+                        <h1>Shipping information</h1>
+                        <div class="labels">
+                            <label>First Name</label>
+                            <input type="text" name="shipping_firstName" class="col-sm-6 form-control">
+                            <label>Last Name</label>
+                            <input type="text" name="shipping_lastName" class="col-sm-6 form-control">
+                            <label>Address</label>
+                            <input type="text" name ="shipping_address" class="col-sm-6 form-control">
+                            <label>Adresss 2</label>
+                            <input type="text" name ="shipping_address2" class="col-sm-6 form-control">
+                            <label>City</label>
+                            <input type="text" name="shipping_city" class="col-sm-6 form-control">
+                            <label>State</label>
+                            <input type="text" name="shipping_state" class="col-sm-6 form-control">
+                            <label>Zipcode</label>
+                            <input type="text" name ="shipping_zipcode" class="col-sm-6 form-control">
                         </div>
-                        </form>
-                        <form action="/payment" method="POST"> 
-                            {% csrf_token %}        
-                            <div class="billingInfo">
-                                <h1>Billing information:</h1>
-                                <div class="labels">
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                <label for="vehicle1"> Same As Shipping</label><br>
-                                <label>First Name</label>
-                                <input type="text" name="firsName" class="col-sm-6 form-control">
-                                <label>Last Name</label>
-                                <input type="text" name="lastName" class="col-sm-6 form-control">
-                                <label>Address</label>
-                                <input type="text" name ="address" class="col-sm-6 form-control">
-                                <label>Adresss 2</label>
-                                <input type="text" name ="address2" class="col-sm-6 form-control">
-                                <label>City</label>
-                                <input type="text" name="city" class="col-sm-6 form-control">
-                                <label>State</label>
-                                <input type="text" name="state" class="col-sm-6 form-control">
-                                <label>Zipcode</label>
-                                <input type="text" name ="zipcode" class="col-sm-6 form-control">
-                                <label>Card</label>
-                                <input type="text" name="city" class="col-sm-6 form-control">
-                                <label>Security Code</label>
-                                <input type="text" name="state" class="col-sm-6 form-control">
-                                <label>Expiration Date</label>
-                                <input type="month" name ="expDate" class="col-sm-6 form-control">
-                                <button type="submit" class="btn btn-primary" name="add" value="user1">Pay</button>
-                                </div>
-                            </div>
-                        </form> 
-
+                    </div>      
+                    <div class="billingInfo">
+                        <h1>Billing information:</h1>
+                        <div class="labels">
+                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                        <label for="vehicle1"> Same As Shipping</label><br>
+                        <label>First Name</label>
+                        <input type="text" name="billing_firstName" class="col-sm-6 form-control">
+                        <label>Last Name</label>
+                        <input type="text" name="billing_lastName" class="col-sm-6 form-control">
+                        <label>Address</label>
+                        <input type="text" name ="billing_address" class="col-sm-6 form-control">
+                        <label>Adresss 2</label>
+                        <input type="text" name ="billing_address2" class="col-sm-6 form-control">
+                        <label>City</label>
+                        <input type="text" name="billing_city" class="col-sm-6 form-control">
+                        <label>State</label>
+                        <input type="text" name="billing_state" class="col-sm-6 form-control">
+                        <label>Zipcode</label>
+                        <input type="text" name ="billing_zipcode" class="col-sm-6 form-control">
+                        <label>Card</label>
+                        <input type="text" name="card" class="col-sm-6 form-control">
+                        <label>Security Code</label>
+                        <input type="text" name="security_card" class="col-sm-6 form-control">
+                        <label>Expiration Date</label>
+                        <input type="month" name ="expDate" class="col-sm-6 form-control">
+                        <button type="submit" class="btn btn-primary" name="pay">Pay</button>
+                        </div>
+                    </div>
+                </form> 
             </div>
         </div>
     </body>

@@ -90,30 +90,44 @@ def showPayment(request, userId): #productId
     }
     return render(request, "payment.html", context)# render payment page with all of the items from shopping cart
 
+
+
 def processPayment(request, userId):
-        
     # errors = User.objects.tripValidator(request.POST)
-    
+
     # if len(errors) > 0:
     #     for key, value in errors.items():
     #         messages.error(request, value, extra_tags=key)
     #     return redirect(f"/dashboard/trip/new")
     userid = request.session['user_id']   
-    user = User.objects.filter(id = userid)[0]
-    pay = ShippingInfo.objects.create(
-        userID = user,
-        first_name = request.POST['destination'],
-        last_name = request.POST['startDate'],
-        address = request.POST['endDate'],
-        adress2 = request.POST['planTrip'],
-        city = request.POST['destination'],
-        state = request.POST['startDate'],
-        zipcode = request.POST['endDate'],
+    user = User.objects.filter(id = userId)[0]
+    ship = ShippingInfo.objects.create(
+        first_name = request.POST['shipping_firstName'],
+        last_name = request.POST['shipping_lastName'],
+        address = request.POST['shipping_address'],
+        address2 = request.POST['shipping_address2'],
+        city = request.POST['shipping_city'],
+        state = request.POST['shipping_state'],
+        zipcode = request.POST['shipping_zipcode'],
+        user = user
     )
-    return redirect("/dashboard")
+    process = BillingInfo.objects.create(
+        first_name = request.POST['billing_firstName'],
+        last_name = request.POST['billing_lastName'],
+        address = request.POST['billing_address'],
+        address2 = request.POST['billing_address2'],
+        city = request.POST['billing_city'],
+        state = request.POST['billing_state'],
+        zipcode = request.POST['billing_zipcode']
 
-    return HttpResponse('process payment') # process the payment and redirect to the receipt page
+    )
+    # pay = PaymentInfo.objects.create(
+    #     card_number = request.POST['creditCard'],
+    #     security_code = request.POST['securityCode'],
 
+    # )
+    print(request.POST["expDate"])
+    return redirect("/receipt")
 
 ## Wish List
 def wishList(request, userID):
