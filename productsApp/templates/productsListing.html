@@ -60,7 +60,7 @@
         //     }
         // });
 
-
+        
         // $(document).ready(function(){
         //     $.ajax({
         //         url:"https://api.printful.com/products",
@@ -137,6 +137,24 @@
             //     $('.category-list').html(resultContent);
             // }, 'json');
         // })
+        $(document).ready(function(){
+            $(document).on('click', '.card-footer #addCart', function(e){
+                e.preventDefault();
+                output = $(this).attr('href')
+                console.log('prevented', output)
+
+                $.get({
+                    url: $(this).attr('href') + '/addToCart',
+                    success: function(res){
+                        $('#cart').prepend('<p class="text-primary">Added to Cart!</p>');
+                        console.log('this went through');
+                        // $('.test-div').html(res);
+                        res;
+                        console.log(res);
+                    }
+                })
+            })
+        })
     </script>
     <div class="site-wrap">
 
@@ -162,7 +180,7 @@
 
                     <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
                         <li class="active"><a href="/home">Home</a></li>
-                        <li><a href="/user/{{user.id}}/shoppingCart">Shopping Cart</a></li>
+                        <li><a href="/user/{{user.id}}/shoppingCart" id="cart">Shopping Cart</a></li>
                         <li><a href="/user/{{user.id}}/wishList">Wish List</a></li>
                         <li class="has-children">
                             <a href="#">Account</a>
@@ -192,8 +210,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <h1 class="my-4">Shop Name</h1>
-                <div class="category-list">
+                <div class="category-list mt-4">
                     {% for category in categories %}
                     <a href="/products/{{category.name}}" class="list-group-item">{{category.name}}</a>
                     {% endfor %}
@@ -209,13 +226,13 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
-                        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+                        <img class="d-block img-fluid" src="https://bigbuzzideagroup.com/wp-3/wp-content/uploads/2019/07/Resized-Networking-Photo-900x350.jpg" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+                        <img class="d-block img-fluid" src="https://media.time4learning.com/uploads/abekavst4l-thingstoknowaboutfeatures-900x350.jpg" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+                        <img class="d-block img-fluid" src="https://cdn.pp.slimpay.com/blog/2016/12/06192933/DZN-Blog-Hero-900x350-SuccessfulBusiness_v2.jpg" alt="Third slide">
                     </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -241,13 +258,13 @@
                                 <p class="card-text">{{product.desc}}</p>
                             </div>
                             <div class="card-footer">
-                                <a href="product/{{product.id}}/addToCart">Click here to add this to your cart</a>
+                                <a href="product/{{product.id}}/addToCart" id="addCart">Click here to add this to your cart</a>
                                 <!-- <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small> -->
                             </div>
                         </div>
                     </div>
                     {% endfor %}
-
+                    <div class="test-div"></div>
                     <!-- <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100"> -->
                             <!-- <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>

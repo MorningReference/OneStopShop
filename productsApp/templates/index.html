@@ -377,28 +377,29 @@
   
           <div class="row">
             <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">
-              
               <div class="listing-item">
                 <div class="listing-image">
-                  <img src="images/img_1.jpg" alt="Image" class="img-fluid">
+                  <img src="https://files.cdn.printful.com/products/10/product_1551968618.jpg" alt="Image" class="img-fluid">
+                  {% comment %} ################# {% endcomment %}
                 </div>
                 <div class="listing-item-content">
-                  <a href="#" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>
-                  <a class="px-3 mb-3 category" href="#">Car &amp; Vehicles</a>
+                  <a href="/product/{{product.id}}" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>
+                  <a class="px-3 mb-3 category" href="/product/{{product.id}}">Car &amp; Vehicles</a>
                   <h2 class="mb-1"><a href="#">Red Luxury Car</a></h2>
                   <span class="address">West Orange, New York</span>
                 </div>
               </div>
-  
+
             </div>
             <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">
               
               <div class="listing-item">
                 <div class="listing-image">
-                  <img src="images/img_2.jpg" alt="Image" class="img-fluid">
+                  <img src="https://files.cdn.printful.com/products/12/product_1550594502.jpg" alt="Image" class="img-fluid">
+                  {% comment %} ############# {% endcomment %}
                 </div>
                 <div class="listing-item-content">
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <a href="/product/{{product.id}}" class="bookmark"><span class="icon-heart"></span></a>
                   <a class="px-3 mb-3 category" href="#">Real Estate</a>
                   <h2 class="mb-1"><a href="#">House with Swimming Pool</a></h2>
                   <span class="address">West Orange, New York</span>
@@ -410,10 +411,11 @@
               
               <div class="listing-item">
                 <div class="listing-image">
-                  <img src="images/img_3.jpg" alt="Image" class="img-fluid">
+                  <img src="https://files.cdn.printful.com/products/37/product_1573197397.jpg" alt="Image" class="img-fluid">
+                  {% comment %} ################ {% endcomment %}
                 </div>
                 <div class="listing-item-content">
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <a href="/product/{{product.id}}" class="bookmark"><span class="icon-heart"></span></a>
                   <a class="px-3 mb-3 category" href="#">Furniture</a>
                   <h2 class="mb-1"><a href="#">Wooden Chair &amp; Table</a></h2>
                   <span class="address">West Orange, New York</span>
@@ -426,10 +428,11 @@
               
               <div class="listing-item">
                 <div class="listing-image">
-                  <img src="images/img_4.jpg" alt="Image" class="img-fluid">
+                  <img src="https://files.cdn.printful.com/products/141/product_1563182581.jpg" alt="Image" class="img-fluid">
+                  {% comment %} #################### {% endcomment %}
                 </div>
                 <div class="listing-item-content">
-                  <a href="#" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>
+                  <a href="/product/{{product.id}}" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>
                   <a class="px-3 mb-3 category" href="#">Electronics</a>
                   <h2 class="mb-1"><a href="#">iPhone X gray</a></h2>
                   <span class="address">West Orange, New York</span>
@@ -441,10 +444,11 @@
               
               <div class="listing-item">
                 <div class="listing-image">
-                  <img src="images/img_2.jpg" alt="Image" class="img-fluid">
+                  <img src="https://files.cdn.printful.com/products/370/product_1558000107.jpg" alt="Image" class="img-fluid">
+                  {% comment %} ###################### {% endcomment %}
                 </div>
                 <div class="listing-item-content">
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <a href="/product/{{product.id}}" class="bookmark"><span class="icon-heart"></span></a>
                   <a class="px-3 mb-3 category" href="#">Real Estate</a>
                   <h2 class="mb-1"><a href="#">House with Swimming Pool</a></h2>
                   <span class="address">West Orange, New York</span>
@@ -452,7 +456,6 @@
               </div>
   
             </div>
-            
   
           </div>
         </div>
@@ -468,9 +471,9 @@
           </div>
           <div class="row mt-5">
             <div class="col-lg-6">
-  
+              {%for product in products%}
               <div class="d-block d-md-flex listing">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_2.jpg')"></a>
+                <a href="{{product.image-}}" class="img d-block"></a>
                 <div class="lh-content">
                   <span class="category">Real Estate</span>
                   <a href="#" class="bookmark"><span class="icon-heart"></span></a>
@@ -486,8 +489,9 @@
                   </p>
                 </div>
               </div>
-              <div class="d-block d-md-flex listing">
-                  <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_3.jpg')"></a>
+              {% endfor %}
+              <!-- <div class="d-block d-md-flex listing">
+                  <a href="listings-single.html" class="img d-block" style="background-image: url({% static '/productsApp/images/img_3.jpg'%})"></a>
                   <div class="lh-content">
                     <span class="category">Furniture</span>
                     <a href="#" class="bookmark"><span class="icon-heart"></span></a>
@@ -505,7 +509,7 @@
                 </div>
   
                 <div class="d-block d-md-flex listing">
-                  <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_4.jpg')"></a>
+                  <a href="listings-single.html" class="img d-block" style="background-image: url({% static '/productsApp/images/img_4.jpg'%})"></a>
                   <div class="lh-content">
                     <span class="category">Electronics</span>
                     <a href="#" class="bookmark"><span class="icon-heart"></span></a>
@@ -528,7 +532,7 @@
             <div class="col-lg-6">
   
               <div class="d-block d-md-flex listing">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_1.jpg')"></a>
+                <a href="listings-single.html" class="img d-block" style="background-image: url({% static '/productsApp/images/img_1.jpg'%})"></a>
                 <div class="lh-content">
                   <span class="category">Cars &amp; Vehicles</span>
                   <a href="#" class="bookmark"><span class="icon-heart"></span></a>
@@ -546,7 +550,8 @@
               </div>
   
               <div class="d-block d-md-flex listing">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_2.jpg')"></a>
+                
+                <a href="listings-single.html" class="img d-block" style="background-image: url({% static '/productsApp/images/img_2.jpg'%})"></a>
                 <div class="lh-content">
                   <span class="category">Real Estate</span>
                   <a href="#" class="bookmark"><span class="icon-heart"></span></a>
@@ -563,7 +568,7 @@
                 </div>
               </div>
               <div class="d-block d-md-flex listing">
-                  <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_3.jpg')"></a>
+                  <a href="listings-single.html" class="img d-block" style="background-image: url({% static '/productsApp/images/img_3.jpg'%})"></a>
                   <div class="lh-content">
                     <span class="category">Furniture</span>
                     <a href="#" class="bookmark"><span class="icon-heart"></span></a>
@@ -578,7 +583,7 @@
                       <span class="review">(3 Reviews)</span>
                     </p>
                   </div>
-                </div>
+                </div> -->
   
             </div>
           </div>
