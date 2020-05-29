@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
-# import requests
 
 def index(request):
     if 'user_id' not in request.session:
@@ -75,28 +74,27 @@ def deleteCartItem(request, userId, productId): # changed product_id to productI
 
 def showPayment(request, userId=1): #productId
     context = {
-        "User": User.objects.filter(id=userId),
-        "Product": Product.objects.filter(id=userId)
+        "User": User.objects.get(id=userId),
+        "Product": Product.objects.get(id=userId)
     }
     return render(request, "payment.html", context)# render payment page with all of the items from shopping cart
 
 
-
 def processPayment(request, userId):
+        
     # errors = User.objects.tripValidator(request.POST)
-
+    
     # if len(errors) > 0:
     #     for key, value in errors.items():
     #         messages.error(request, value, extra_tags=key)
     #     return redirect(f"/dashboard/trip/new")
-    userid = request.session['user_id']   
     user = User.objects.filter(id = userId)[0]
     cart = Product.objects.filter(shoppingCart__user = user).all()
     order = Order.objects.create(user = user)
     for product in cart:
         order.products.add(product)
-
-    ship = ShippingInfo.objects.create(
+    if request.POST['check'] == 'sameAsShipping':
+        ship = ShippingInfo.objects.create(
         first_name = request.POST['shipping_firstName'],
         last_name = request.POST['shipping_lastName'],
         address = request.POST['shipping_address'],
@@ -105,8 +103,37 @@ def processPayment(request, userId):
         state = request.POST['shipping_state'],
         zipcode = request.POST['shipping_zipcode'],
         user = user
-    )
-    process = BillingInfo.objects.create(
+        )
+        process = BillingInfo.objects.create(
+        first_name = request.POST['shipping_firstName'],
+        last_name = request.POST['shipping_lastName'],
+        address = request.POST['shipping_address'],
+        address2 = request.POST['shipping_address2'],
+        city = request.POST['shipping_city'],
+        state = request.POST['shipping_state'],
+        zipcode = request.POST['shipping_zipcode'],
+        )
+
+        pay = PaymentInfo.objects.create(
+        card_number = request.POST['credit_card'],
+        expiration_date = request.POST['expDate'],
+        security_number = request.POST['security_code'],
+        user = user,
+        billingInfo = process
+        )
+
+    else:
+        ship = ShippingInfo.objects.create(
+        first_name = request.POST['shipping_firstName'],
+        last_name = request.POST['shipping_lastName'],
+        address = request.POST['shipping_address'],
+        address2 = request.POST['shipping_address2'],
+        city = request.POST['shipping_city'],
+        state = request.POST['shipping_state'],
+        zipcode = request.POST['shipping_zipcode'],
+        user = user
+        )
+        process = BillingInfo.objects.create(
         first_name = request.POST['billing_firstName'],
         last_name = request.POST['billing_lastName'],
         address = request.POST['billing_address'],
@@ -114,15 +141,19 @@ def processPayment(request, userId):
         city = request.POST['billing_city'],
         state = request.POST['billing_state'],
         zipcode = request.POST['billing_zipcode']
-
-    )
-    # pay = PaymentInfo.objects.create(
-    #     card_number = request.POST['creditCard'],
-    #     security_code = request.POST['securityCode'],
-
-    # )
-    print(request.POST["expDate"])
+        
+        )
+        pay = PaymentInfo.objects.create(
+        card_number = request.POST['credit_card'],
+        expiration_date = request.POST['expDate'],
+        security_number = request.POST['security_code'],
+        user = user,
+        billingInfo = process
+        )
     return redirect("/receipt")
+
+
+
 
 ## Wish List
 def wishList(request, userId=1):
@@ -146,10 +177,10 @@ def addWishToCart(request, userId, productId): # replace ShoppingCart_id with us
     ##this cannot be right...
 
 ##Receipt
-def showReceipt(request, order_id):
-    context={
-        "purchased_items": Order.objects.get(id=order_id)
-    }
+def showReceipt(request):
+    # context={
+    #     "purchased_items": Order.objects.get(id=order_id)
+    # }
     return render(request, 'receipt.html')
 
 def showOrders(request, userId=1):
