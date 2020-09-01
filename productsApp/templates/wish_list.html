@@ -59,14 +59,15 @@
                 <nav class="site-navigation position-relative text-right" role="navigation">
 
                     <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                        <li class="active"><a href="/home">Home</a></li>
+                        <li><a href="/home">Home</a></li>
                         <li><a href="/user/{{user.id}}/shoppingCart">Shopping Cart</a></li>
-                        <li><a href="/user/{{user.id}}/wishList">Wish List</a></li>
+                        <li class="active"><a href="/user/{{user.id}}/wishList">Wish List</a></li>
                         <li class="has-children">
                             <a href="#">Account</a>
                             <ul class="dropdown">
                                 <li><a href="/user/myaccount/{{user.id}}">My Account</a></li>
                                 <li><a href="/user/{{user.id}}/orders">My Orders</a></li>
+                                <li><a href="/user/logout">Logout</a></li>
                                 <!-- <li><a href="/dashboard/products">My Products</a></li> -->
                             </ul>
                         </li>
@@ -111,11 +112,11 @@
                         <th scope="col">Product</th>
                         <th scope="col">Description</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Qty</th>
+                        <th scope="col">Add to Cart</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for product in products_in_cart %}
+                    {% for product in products_in_wish.all %}
                     <tr>
                         <td>
                             <img src="{{product.image}}" class="h-50" alt="">
@@ -125,8 +126,8 @@
                         </td>
                         <td>{{product.desc}}</td>
                         <td>{{product.price}}</td>
-                        <td>1</td>
-                        <td><button class="btn btn-outline-danger text-danger"><a href="/user/{{user.id}}/shoppingCart/{{product.id}}/delete" class>Remove</a></button></td>
+                        <td><button class="btn btn-outline-success"><a href="/user/{{user.id}}/wishList/{{product.id}}/addToCart">Add to Cart</a></button></td>
+                        <td><button class="btn btn-outline-danger text-danger"><a href="/user/{{user.id}}/wishList/{{product.id}}/delete" class>Remove</a></button></td>
                     </tr>
                     {% endfor %}
                     </tbody>
