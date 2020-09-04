@@ -1,6 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
+from django.views.decorators.csrf import csrf_exempt
+import stripe
+import json
+from django.http import JsonResponse
 
 
 def index(request):
@@ -114,8 +118,33 @@ def showPayment(request, userId=1):  # productId
     return render(request, "payment.html", context)
 
 
-def processPayment(request, userId):
+@csrf_exempt
+def createPayment(request, userId):
+    user = User.objects.filter(id=userId)[0]
+    cart = Product.objects.filter(shoppingCart__user=user).all()
+    total = cart.aggregate(Sum('price'))['product_price__sum']
+    total *= 100
+    stripe.api_key = 'sk_test_51GuRsoCHa7tWmaIpdwnzJmINZHe72TJ9EysvgL0N1mKY48NWPJRvwhh2z6VIv3hwjnTzM1Ij8aJISfWOWQXgpY2O007hFB1Eax'
 
+    if request.method == "POST":
+        data = json.loads(request.body)
+        intent = stripe.PaymentIntent.create(amount=total, currency='usd', metadata={
+            'integration_check': 'accept_a_payment'},)
+        try:
+            return JsonResponse({'publishableKey': 'pk_test_51GuRsoCHa7tWmaIpCliv1INqTrABvAiPwQkef1fZ2ZegWptiBWPJf34SrGVxyf3NMqO1ZrINg7E1azIaUNiqQ8KP00jSPXRv0P', 'clientSecret': intent.client_secret})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=403)
+
+
+def paymentComplete(request):
+    if request.method == "POST":
+        data = json.loads(request.POST.get("payload"))
+        if data["status"] == "succeeded":
+            # save purchase here/ setup email confirmation
+            return render(request, "receipt.html")
+
+
+def processPayment(request, userId):
     # errors = User.objects.tripValidator(request.POST)
 
     # if len(errors) > 0:
@@ -230,9 +259,7 @@ def addWishToCart(request, userId, productId):
 
 
 def showReceipt(request):
-    # context={
-    #     "purchased_items": Order.objects.get(id=order_id)
-    # }
+    # if user is authenticated
     return render(request, 'receipt.html')
 
 

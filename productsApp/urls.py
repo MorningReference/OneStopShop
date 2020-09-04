@@ -8,7 +8,8 @@ urlpatterns = [
     path('product/<int:productId>', views.singleProduct),
     path('product/<int:productId>/addToCart', views.addToCart),
     path('user/<int:userId>/shoppingCart', views.shoppingCart),
-    path('user/<int:userId>/shoppingCart/<int:productId>/delete', views.deleteCartItem),
+    path('user/<int:userId>/shoppingCart/<int:productId>/delete',
+         views.deleteCartItem),
     path('user/<int:userId>/payment', views.showPayment),
     path('user/<int:userId>/payment/process', views.processPayment),
     path('user/<int:userId>/wishList', views.wishList),
@@ -18,4 +19,6 @@ urlpatterns = [
     path('<int:orderId>/receipt', views.showReceipt),
     path('user/<int:userId>/orders', views.showOrders),
     path('user/<int:userId>/orders/<int:orderId>', views.singleOrder),
+    path('user/<int:userId>/createPaymentIntent', views.createPayment),
+    path('user/<int:userId>/paymentComplete', views.paymentComplete),
 ]
