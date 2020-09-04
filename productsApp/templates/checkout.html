@@ -25,10 +25,6 @@
             crossorigin="anonymous"
         ></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-        <!-- loading stripe.js -->
-        <script src="https://js.stripe.com/v3/"></script>
-        
         <link rel="stylesheet" href="bower_components/aos/dist/aos.css" />
         <script src="bower_components/aos/dist/aos.js"></script>
         <link
@@ -38,12 +34,6 @@
         <link rel="stylesheet" href="bower_components/aos/dist/aos.css" />
         <script src="bower_components/aos/dist/aos.js"></script>
         {% load static %}
-
-        <!-- loading stripe components -->
-        <!-- <script src="{% static 'payment/js/client.js' %}"></script> -->
-        <link rel="stylesheet" href="{% static 'payment/css/global.css' %}" />
-
-
         <link
             rel="stylesheet"
             href="{% static 'productsApp/fonts/icomoon/style.css' %}"
@@ -234,30 +224,14 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div id="accordion">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button
-                                        class="btn btn-link"
-                                        data-toggle="collapse"
-                                        data-target="#collapseOne"
-                                        aria-expanded="true"
-                                        aria-controls="collapseOne"
-                                    >
-                                        1. Shipping
-                                    </button>
-                                </h5>
-                            </div>
-                            <div
-                                id="collapseOne"
-                                class="collapse show"
-                                aria-labelledby="headingOne"
-                                data-parent="#accordion"
-                            >
-                                <div class="card-body">
-                                    <h1>Shipping information</h1>
+                    <!-- <form
+                        action="/user/{{User.id}}/payment/process"
+                        method="POST"
+                    >
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>Shipping information</h1>
                                 <div class="labels">
                                     <label>First Name</label>
                                     <input
@@ -303,229 +277,147 @@
                                     />
                                 </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button
-                                        class="btn btn-link collapsed"
-                                        data-toggle="collapse"
-                                        data-target="#collapseTwo"
-                                        aria-expanded="false"
-                                        aria-controls="collapseTwo"
-                                    >
-                                        2. Billing
-                                    </button>
-                                </h5>
-                            </div>
-                            <div
-                                id="collapseTwo"
-                                class="collapse"
-                                aria-labelledby="headingTwo"
-                                data-parent="#accordion"
-                            >
-                                <div class="card-body">
-                                    <div class="sr-root">
-                                        <div class="sr-main">
-                                            <form id="payment-form" class="sr-payment-form">
-                                                {% csrf_token %}
-                                                <div class="sr-combo-inputs-row">
-                                                    <div class="sr-input sr-card-element" id="card-element">
-                                                        <!--Stripe.js injects the Card Element-->
-                                                    </div>
-                                                </div>
-                                                <div class="sr-field-error" id="card-errors"></div>
-                                                <button id="submit" class="btn">
-                                                    <div class="spinner-border spinner-border-sm text-light hidden" id="spinner" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div>
-                                                    <span id="button-text">Pay</span>
-                                                </button>
-                                                <p id="card-error" role="alert"></p>
-                                                <p class="result-message hidden">
-                                                    Payment succeeded, see the result in your
-                                                    <a href="" target="_blank">Stripe dashboard.</a>
-                                                    Refresh the page to pay again.
-                                                </p>
-                                            </form>
-                                            <div class="sr-result hidden">
-                                                <p>Payment completed</p>
-                                                <pre>
-                                                    <code></code>
-                                                </pre>
-                                            </div>
-                                        </div>
+                            <div class="col-6">
+                                <div class="billingInfo">
+                                    <h1>Billing information:</h1>
+                                    <div class="labels">
+                                        <input
+                                            type="checkbox"
+                                            name="check"
+                                            value="sameAsShipping"
+                                        />
+                                        <label> Same As Shipping</label><br />
+                                        <label>First Name</label>
+                                        <input
+                                            type="text"
+                                            name="billing_firstName"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>Last Name</label>
+                                        <input
+                                            type="text"
+                                            name="billing_lastName"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>Address</label>
+                                        <input
+                                            type="text"
+                                            name="billing_address"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>Adresss 2</label>
+                                        <input
+                                            type="text"
+                                            name="billing_address2"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>City</label>
+                                        <input
+                                            type="text"
+                                            name="billing_city"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>State</label>
+                                        <input
+                                            type="text"
+                                            name="billing_state"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>Zipcode</label>
+                                        <input
+                                            type="text"
+                                            name="billing_zipcode"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>Card</label>
+                                        <input
+                                            type="text"
+                                            name="credit_card"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>Security Code</label>
+                                        <input
+                                            type="text"
+                                            name="security_code"
+                                            class="col-sm-6 form-control"
+                                        />
+                                        <label>Expiration Date</label>
+                                        <input
+                                            type="month"
+                                            name="expDate"
+                                            class="col-sm-6 form-control"
+                                        />
                                     </div>
-                                    <form id="payload" class="hidden" action="user/{{User.id}}/paymentComplete/paymentComplete" method="POST">
-                                        {% csrf_token %}
-                                        <input id="data-payload" type="hidden" name="payload">
-                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button
-                                        class="btn btn-link collapsed"
-                                        data-toggle="collapse"
-                                        data-target="#collapseThree"
-                                        aria-expanded="false"
-                                        aria-controls="collapseThree"
-                                    >
-                                        3. Review
-                                    </button>
-                                </h5>
-                            </div>
-                            <div
-                                id="collapseThree"
-                                class="collapse"
-                                aria-labelledby="headingThree"
-                                data-parent="#accordion"
+                        <div class="text-center">
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                name="pay"
                             >
-                                <div class="card-body">
-                                    This is the review page!
+                                Pay
+                            </button>
+                        </div>
+                    </form> -->
+                    <h4 class="font-weight-bold my-3">Billing</h4>
+                    <div class="card mx-5">
+                        <div class="card-body">
+                            <div class="sr-root">
+                                <div class="sr-main">
+                                    <form
+                                        id="payment-form"
+                                        class="sr-payment-form"
+                                    >
+                                        {% csrf_token %}
+                                        <div class="sr-combo-inputs-row">
+                                            <div
+                                                class="sr-input sr-card-element"
+                                                id="card-element"
+                                            ></div>
+                                        </div>
+                                        <div
+                                            class="sr-field-error"
+                                            id="card-errors"
+                                            role="alert"
+                                        ></div>
+                                        <button id="submit" class="btn">
+                                            <div
+                                                class="spinner-border spinner-border-sm text-light hidden"
+                                                id="spinner"
+                                                role="status"
+                                            >
+                                                <span class="sr-only"
+                                                    >Loading...</span
+                                                >
+                                            </div>
+                                            <span id="button-text">Pay</span
+                                            ><span id="order-amount"></span>
+                                        </button>
+                                    </form>
+                                    <div class="sr-result hidden">
+                                        <p>Payment completed<br /></p>
+                                        <pre>
+                                            <code></code>
+                                        </pre>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <form
+                        id="payload"
+                        class="hidden"
+                        action="/payment-complete"
+                        method="post"
+                    >
+                        {% csrf_token %}
+                        <input id="data-payload" type="hidden" name="payload" />
+                    </form>
                 </div>
             </div>
         </div>
     </body>
-    <script type="text/javascript">
-        // A reference to Stripe.js initialized with your real test publishable API key.
-        var stripe = Stripe(
-            'pk_test_51GuRsoCHa7tWmaIpCliv1INqTrABvAiPwQkef1fZ2ZegWptiBWPJf34SrGVxyf3NMqO1ZrINg7E1azIaUNiqQ8KP00jSPXRv0P'
-        );
-
-        var orderData = {
-            items: [{ id: "products" }],
-            currency: "usd",
-        };
-
-        // Disable the button until we have Stripe set up on the page
-        document.getElementById("submit").disabled = true;
-
-        fetch("/create-payment-intent", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(orderData)
-        })
-            .then(function(result) {
-                return result.json();
-            })
-            .then(function(data) {
-                return setupElements(data);
-            })
-            .then(function({ stripe, card, clientSecret }) {
-                document.getElementById("submit").disabled = false;
-
-                // Handle form submission.
-                var form = document.getElementById("payment-form");
-                form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                // Initiate payment when the submit button is clicked
-                pay(stripe, card, clientSecret);
-                });
-            });
-
-        // Set up Stripe.js and Elements to use in checkout form
-        var setupElements = function(data) {
-            stripe = Stripe(data.publishableKey);
-            var elements = stripe.elements();
-            var style = {
-                base: {
-                color: "#32325d",
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: "antialiased",
-                fontSize: "16px",
-                "::placeholder": {
-                    color: "#aab7c4"
-                }
-                },
-                invalid: {
-                color: "#fa755a",
-                iconColor: "#fa755a"
-                }
-            };
-
-            var card = elements.create("card", { style: style });
-            card.mount("#card-element");
-
-            return {
-                stripe: stripe,
-                card: card,
-                clientSecret: data.clientSecret
-            };
-        };
-
-        /*
-        * Calls stripe.confirmCardPayment which creates a pop-up modal to
-        * prompt the user to enter extra authentication details without leaving your page
-        */
-        var pay = function(stripe, card, clientSecret) {
-            changeLoadingState(true);
-
-            // Initiate the payment.
-            // If authentication is required, confirmCardPayment will automatically display a modal
-            stripe
-                .confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: card
-                }
-                })
-                .then(function(result) {
-                if (result.error) {
-                    // Show error to your customer
-                    showError(result.error.message);
-                } else {
-                    // The payment has been processed!
-                    orderComplete(clientSecret);
-                }
-                });
-        };
-
-        /* ------- Post-payment helpers ------- */
-
-        /* Shows a success / error message when the payment is complete */
-        var orderComplete = function(clientSecret) {
-            // Just for the purpose of the sample, show the PaymentIntent response object
-            stripe.retrievePaymentIntent(clientSecret).then(function(result) {
-                var paymentIntent = result.paymentIntent;
-                var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
-                
-                // post data and show new page
-                var form2 =document.getElementById("payload");
-                var input = document.getElementById("data-payload")
-                input.value = paymentIntentJson;
-                form2.submit();
-                changeLoadingState(false);
-            });
-        };
-
-        var showError = function(errorMsgText) {
-            changeLoadingState(false);
-            var errorMsg = document.querySelector(".sr-field-error");
-            errorMsg.textContent = errorMsgText;
-            setTimeout(function() {
-                errorMsg.textContent = "";
-            }, 4000);
-        };
-
-        // Show a spinner on payment submission
-        var changeLoadingState = function(isLoading) {
-            if (isLoading) {
-                document.getElementById("submit").disabled = true;
-                document.querySelector("#spinner").classList.remove("hidden");
-                document.querySelector("#button-text").classList.add("hidden");
-            } else {
-                document.getElementById("submit").disabled = false;
-                document.querySelector("#spinner").classList.add("hidden");
-                document.querySelector("#button-text").classList.remove("hidden");
-            }
-        };
-    </script>
 </html>

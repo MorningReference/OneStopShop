@@ -1,4 +1,8 @@
 /* Base */
+.card-text{
+  height: 7rem;
+}
+
 body {
   line-height: 1.7;
   color: #4d4d4d;
@@ -1749,3 +1753,4 @@ h1, h2, h3, h4, h5,
   .newsletter .btn:hover {
     color: #fff;
     background: #000; }
+

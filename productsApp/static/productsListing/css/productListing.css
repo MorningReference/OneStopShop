@@ -2,6 +2,9 @@ body {
     padding-top: 100px;
 }
 
-.container{
-    /* padding-top: 50px; */
+.card-text {
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: scroll;
 }

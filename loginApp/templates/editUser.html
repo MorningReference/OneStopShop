@@ -36,53 +36,51 @@
     <script src="{% static 'productsApp/js/main.js' %}"></script>
 </head>
 
-<header class="site-navbar container py-0 bg-white" role="banner">
-
-    <div class="container">
-        <div class="row align-items-center">
-        
-        <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.html" class="text-black mb-0">OneStop<span class="text-primary">Shop</span>  </a></h1>
-        </div>
-        <div class="col-12 col-md-10 d-none d-xl-block">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-
-            <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="listings.html">Ads</a></li>
-                <li class="has-children">
-                <a href="about.html">Products</a>
-                <ul class="dropdown">
-                    <li><a href="#">Electronics</a></li>
-                    <li><a href="#">Cars</a></li>
-                    <li><a href="#">Real Estate</a></li>
-                    <li><a href="#">Other</a></li>
-                </ul>
-                </li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-
-                <li class="ml-xl-3 login"><a href="/user"><span class="border-left pl-xl-4"></span>Log In</a></li>
-                <li><a href="register.html">Register</a></li>
-
-                <li><a href="/user/{{user.id}}/shoppingCart" role="button" style="position: right;">Shopping Cart</a></li>
-            </ul>
-            </nav>
-        </div>
-
-
-        <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">
-            <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
-        </div>
-
-        </div>
-    </div>
-
-</header>
 
 <body>
+    <div class="site-wrap">
+        <div class="site-mobile-menu">
+            <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+        <header class="site-navbar container py-0 bg-white" role="banner">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-6 col-xl-2">
+                    <h1 class="mb-0 site-logo"><a href="index.html" class="text-black mb-0">OneStop<span class="text-primary">Shop</span>  </a></h1>
+                </div>
+                <div class="col-12 col-md-10 d-none d-xl-block">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li class="active"><a href="/home">Home</a></li>
+                            <li><a href="/user/{{user.id}}/shoppingCart">Shopping Cart</a></li>
+                            <li><a href="/user/{{user.id}}/wishList">Wish List</a></li>
+                            <li class="has-children">
+                                <a href="#">Account</a>
+                                <ul class="dropdown">
+                                    <li><a href="/user/myaccount/{{user.id}}">My Account</a></li>
+                                    <li><a href="/user/{{user.id}}/orders">My Orders</a></li>
+                                    <li><a href="/user/logout">Logout</a></li>
 
-    <!-- <nav class="navbar navbar-dark bg-dark">
+                                    <!-- <li><a href="/dashboard/products">My Products</a></li> -->
+                                </ul>
+                            </li>
+                            <li class="ml-xl-3 login"><a href="/user/login"><span class="border-left pl-xl-4"></span>Log In</a></li>
+                            <li><a href="/user/register">Register</a></li>
+                            <li><a href="/products" class="cta"><span class="bg-primary text-white rounded">Product Listings</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">
+                    <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
+                </div>
+            </div>
+        </header>
+        <!-- <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand text-light" href="/home">One Stop Shop</a>
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -106,54 +104,80 @@
                 </li>
             </ul>
         </div>
-    </nav> -->
-    <div class="container">
-        <h1 class="border-bottom pb-3">Account Settings</h1>
-        <div class="update-user-info my-5 pb-3 border-bottom">
-            <form action="/user/myaccount/{{user.id}}/info/update" method="POST">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="user-info-input col-8">
-                        <p><strong>Your Info</strong></p>
-                        <div class="row">
-                            <div class="form-group col-4">
-                                <label for="updated_first_name">First Name</label>
-                                <input type="text" name="updated_first_name" value="{{user.first_name}}" class="form-control">
-                                {% for message in messages %}
-                                {% if message.extra_tags == "updated_first_name" %}
-                                <span class="text-danger pl-1">{{message}}</span>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="form-group col-4">
-                                <label for="updated_last_name">Last Name</label>
-                                <input type="text" name="updated_last_name" value="{{user.last_name}}" class="form-control">
-                                {% for message in messages %}
-                                {% if message.extra_tags == "updated_last_name" %}
-                                <span class="text-danger pl-1">{{message}}</span>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="form-group col-4">
-                                <label for="updated_email">Email Address</label>
-                                <input type="text" name="updated_email" value="{{user.email}}" class="form-control">
-                                {% for message in messages %}
-                                {% if message.extra_tags == "updated_email" %}
-                                <span class="text-danger pl-1">{{message}}</span>
-                                {% endif %}
-                                {% endfor %}
+        </nav> -->
+        <div class="container">
+            <h1 class="border-bottom pb-3">Account Settings</h1>
+            <div class="update-user-info my-5 pb-3 border-bottom">
+                <form action="/user/myaccount/{{user.id}}/info/update" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="user-info-input col-8">
+                            <p><strong>Your Info</strong></p>
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label for="updated_first_name">First Name</label>
+                                    <input type="text" name="updated_first_name" value="{{user.first_name}}" class="form-control">
+                                    {% for message in messages %}
+                                    {% if message.extra_tags == "updated_first_name" %}
+                                    <span class="text-danger pl-1">{{message}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="updated_last_name">Last Name</label>
+                                    <input type="text" name="updated_last_name" value="{{user.last_name}}" class="form-control">
+                                    {% for message in messages %}
+                                    {% if message.extra_tags == "updated_last_name" %}
+                                    <span class="text-danger pl-1">{{message}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="updated_email">Email Address</label>
+                                    <input type="text" name="updated_email" value="{{user.email}}" class="form-control">
+                                    {% for message in messages %}
+                                    {% if message.extra_tags == "updated_email" %}
+                                    <span class="text-danger pl-1">{{message}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
+                        <div class="text-center col-4">
+                            <button type="submit" class="btn btn-primary">Update Your Info</button>
+                        </div>
                     </div>
-                    <div class="text-center col-4">
-                        <button type="submit" class="btn btn-primary">Update Your Info</button>
+                </form>
+            </div>
+            <div class="update-payment my-5 pb-3 border-bottom">
+                <form action="/user/myaccount/{{user.id}}/payment/update" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="user-info-input col-8">
+                            <p><strong>Password</strong></p>
+                            <div class="row">
+                                <div class="form-group col-lg-4 col-sm-6">
+                                    <label for="updated_password">New Password</label>
+                                    <input type="password" name="updated_password" class="form-control">
+                                    {% for message in messages %}
+                                    {% if message.extra_tags == "updated_password" %}
+                                    <span class="text-danger pl-1">{{message}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group col-lg-4 col-sm-6">
+                                    <label for="updated_confirm_password">Confirm New Password</label>
+                                    <input type="password" name="updated_confirm_password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center col-4">
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="update-shipping-address my-5 pb-3 border-bottom">
-            <form action="/user/myaccount/{{user.id}}/shipping/update" method="POST">
-                {% csrf_token %}
+                </form>
+            </div>
+            <div class="update-shipping-address my-5 pb-3 border-bottom">
                 <div class="row">
                     <div class="user-info-input col-8">
                         <p><strong>Stored Shipping Addresses</strong></p>
@@ -163,72 +187,35 @@
                             <p>{{item.address}}</p>
                             <p>{{item.address2}}</p>
                             <p>{{item.city}}, {{item.state}}</p>
-                            
+                            <p><a href="shipping/{{item.id}}/edit">Edit</a> | <a href="shipping/{{item.id}}/delete">Remove</a></p>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="text-center col-4">
-                        <button type="submit" class="btn btn-primary">Update Password</button>
+                        <a href="shipping/add" class="btn btn-primary">Add Address</a>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="update-payment my-5 pb-3 border-bottom">
-            <form action="/user/myaccount/{{user.id}}/payment/update" method="POST">
-                {% csrf_token %}
+            </div>
+            <div class="update-shipping-address my-5 pb-3 border-bottom">
                 <div class="row">
                     <div class="user-info-input col-8">
-                        <p><strong>Password</strong></p>
+                        <p><strong>Stored Payment Information</strong></p>
                         <div class="row">
-                            <div class="form-group col-lg-4 col-sm-6">
-                                <label for="updated_password">New Password</label>
-                                <input type="password" name="updated_password" class="form-control">
-                                {% for message in messages %}
-                                {% if message.extra_tags == "updated_password" %}
-                                <span class="text-danger pl-1">{{message}}</span>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="form-group col-lg-4 col-sm-6">
-                                <label for="updated_confirm_password">Confirm New Password</label>
-                                <input type="password" name="updated_confirm_password" class="form-control">
-                            </div>
+                            {% for item in stored_payment.all %}
+                            <p>{{item.first_name}} {{item.last_name}}</p>
+                            <p>{{item.address}}</p>
+                            <p>{{item.address2}}</p>
+                            <p>{{item.city}}, {{item.state}}</p>
+                            <p><a href="payment/{{item.id}}/edit">Edit</a> | <a href="payment/{{item.id}}/delete">Remove</a></p>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="text-center col-4">
-                        <button type="submit" class="btn btn-primary">Update Password</button>
+                        <a href="payment/add" class="btn btn-primary">Add Address</a>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-        <div class="update-password my-5 pb-3 border-bottom">
-            <form action="/user/myaccount/{{user.id}}/password/update" method="POST">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="user-info-input col-8">
-                        <p><strong>Password</strong></p>
-                        <div class="row">
-                            <div class="form-group col-lg-4 col-sm-6">
-                                <label for="updated_password">New Password</label>
-                                <input type="password" name="updated_password" class="form-control">
-                                {% for message in messages %}
-                                {% if message.extra_tags == "updated_password" %}
-                                <span class="text-danger pl-1">{{message}}</span>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="form-group col-lg-4 col-sm-6">
-                                <label for="updated_confirm_password">Confirm New Password</label>
-                                <input type="password" name="updated_confirm_password" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center col-4">
-                        <button type="submit" class="btn btn-primary">Update Password</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
     </div>
 </body>
 </html>
