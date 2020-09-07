@@ -407,7 +407,7 @@
         // Disable the button until we have Stripe set up on the page
         document.getElementById("submit").disabled = true;
 
-        fetch("/create-payment-intent", {
+        fetch("/user/{{User.id}}/createPaymentIntent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -423,18 +423,23 @@
             .then(function({ stripe, card, clientSecret }) {
                 document.getElementById("submit").disabled = false;
 
+                card.on("change", function(event) {
+                    document.querySelector("button").disabled = event.empty;
+                    document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+                });
+
                 // Handle form submission.
                 var form = document.getElementById("payment-form");
                 form.addEventListener("submit", function(event) {
                 event.preventDefault();
                 // Initiate payment when the submit button is clicked
-                pay(stripe, card, clientSecret);
+                payWithCard(stripe, card, clientSecret);
                 });
             });
 
         // Set up Stripe.js and Elements to use in checkout form
         var setupElements = function(data) {
-            stripe = Stripe(data.publishableKey);
+            // stripe = Stripe(data.publishableKey);
             var elements = stripe.elements();
             var style = {
                 base: {
@@ -466,7 +471,7 @@
         * Calls stripe.confirmCardPayment which creates a pop-up modal to
         * prompt the user to enter extra authentication details without leaving your page
         */
-        var pay = function(stripe, card, clientSecret) {
+        var payWithCard = function(stripe, card, clientSecret) {
             changeLoadingState(true);
 
             // Initiate the payment.

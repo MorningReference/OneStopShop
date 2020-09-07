@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
+from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 import stripe
 import json
@@ -122,7 +123,7 @@ def showPayment(request, userId=1):  # productId
 def createPayment(request, userId):
     user = User.objects.filter(id=userId)[0]
     cart = Product.objects.filter(shoppingCart__user=user).all()
-    total = cart.aggregate(Sum('price'))['product_price__sum']
+    total = cart.aggregate(Sum('price'))['price__sum']
     total *= 100
     stripe.api_key = 'sk_test_51GuRsoCHa7tWmaIpdwnzJmINZHe72TJ9EysvgL0N1mKY48NWPJRvwhh2z6VIv3hwjnTzM1Ij8aJISfWOWQXgpY2O007hFB1Eax'
 
